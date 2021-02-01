@@ -18,24 +18,6 @@ function getRecommendations(numOfItems) {
     });
 }
 
-const createCard = () => {
-    const template = `<li>
-    <div class="card">
-      <div class="card-content">
-        <div class="content">
-          <div class="name">fff</div>
-          <div class="description">fdfdf fgfd</div>
-        </div>
-      </div>
-    </div>
-  </li>`;
-
-    const el = document.createElement('div');
-    el.innerHTML = template;
-
-    return el.firstChild;
-};
-
 function getCard(type) {
     let recommendationObject;
 
