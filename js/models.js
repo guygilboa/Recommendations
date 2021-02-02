@@ -4,11 +4,7 @@ const recommendationType = {
 }
 
 class Recommendation {
-    constructor(type, name, url, thumbnails) {
-        this.type = type;
-        this.name = name;
-        this.url = url;
-        this.thumbnails = thumbnails;
+    constructor() {
     }
 
     getTemplateElement(id, title, thumbnail, url, branding, origin) {
@@ -25,8 +21,8 @@ class Recommendation {
 }
 
 class SponsoredRecommendation extends Recommendation {
-    constructor(type, name, url, thumbnails) {
-        super(type, name, url, thumbnails);
+    constructor() {
+        super();
     }
 
     getTemplateElement(id, title, thumbnail, url, branding, origin) {
@@ -44,8 +40,8 @@ class SponsoredRecommendation extends Recommendation {
 }
 
 class OrganicRecommendation extends Recommendation {
-    constructor(type, name, url, thumbnails) {
-        super(type, name, url, thumbnails);
+    constructor() {
+        super();
     }
 
     getTemplateElement(id, title, thumbnail, url, branding, origin) {

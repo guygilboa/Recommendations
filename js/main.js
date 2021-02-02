@@ -39,6 +39,7 @@ const cardFactory = (function () {
 })();
 
 function displayRecommendations(results, type) {
+    const t0 = performance.now();
     const resultsObj = JSON.parse(results);
     const listRecommendations = resultsObj.list;
     let recommendationObject = cardFactory.create(type);
@@ -59,11 +60,16 @@ function displayRecommendations(results, type) {
     }
 
     container.appendChild(fragment);
+    const t1 = performance.now();
+    console.log("displayRecommendations took " + (t1 - t0) + " milliseconds.")
 }
 
 (() => {
+    const t0 = performance.now();
     getRecommendations(6).then(
         function (response) {
+            const t1 = performance.now();
+            console.log("getRecommendations took " + (t1 - t0) + " milliseconds.")
             displayRecommendations(response, recommendationType.SPONSORED);
             document.getElementById('loader').style.display = 'none';
             document.getElementById('recommendations-container').style.display = 'flex';
