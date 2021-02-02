@@ -18,28 +18,32 @@ function getRecommendations(numOfItems) {
     });
 }
 
-function getCard(type) {
-    let recommendationObject;
+const cardFactory = (function () {
+    return {
+        create: function (type) {
+            let recommendationObject;
 
-    switch (type) {
-        case recommendationType.SPONSORED:
-            recommendationObject = new SponsoredRecommendation();
-            break;
+            switch (type) {
+                case recommendationType.SPONSORED:
+                    recommendationObject = new SponsoredRecommendation();
+                    break;
 
-        case recommendationType.ORGANIC:
-            recommendationObject = new OrganicRecommendation();
-            break;
+                case recommendationType.ORGANIC:
+                    recommendationObject = new OrganicRecommendation();
+                    break;
+            }
+
+            return recommendationObject;
+        }
     }
-
-    return recommendationObject;
-}
+})();
 
 function displayRecommendations(results, type) {
     const resultsObj = JSON.parse(results);
     const listRecommendations = resultsObj.list;
-    let recommendationObject = getCard(type);
+    let recommendationObject = cardFactory.create(type);
 
-    let container = document.getElementById('recommendations-container')
+    let container = document.getElementById('cards-container')
     let fragment = new DocumentFragment();
 
     let length = listRecommendations.length;
@@ -48,15 +52,17 @@ function displayRecommendations(results, type) {
         let template = recommendationObject.getTemplateElement(listRecommendations[i].id,
             listRecommendations[i].name,
             decodeURIComponent(listRecommendations[i].thumbnail[0].url),
-            listRecommendations[i].url)
+            listRecommendations[i].url,
+            listRecommendations[i].branding,
+            listRecommendations[i].origin)
         fragment.appendChild(template);
     }
 
     container.appendChild(fragment);
 }
 
-(function () {
-    getRecommendations(10).then(
+(() => {
+    getRecommendations(6).then(
         function (response) {
             displayRecommendations(response, recommendationType.SPONSORED);
             document.getElementById('loader').style.display = 'none';

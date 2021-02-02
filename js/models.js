@@ -11,21 +11,15 @@ class Recommendation {
         this.thumbnails = thumbnails;
     }
 
-    getTemplateElement(id, title, thumbnail, url) {
-        const template = `<li>
-    <div class="card">
-      <div class="card-content">
-        <div class="content">
-          <div class="name">fff</div>
-          <div class="description">fdfdf fgfd</div>
-        </div>
-      </div>
-    </div>
-  </li>`;
+    getTemplateElement(id, title, thumbnail, url, branding, origin) {
+        const template = `<div class="item-container" data-item-id="{id}">          
+                            <a class="item-link" href="{url}" target="_blank">
+                            <div class=""><span class="item-image" style="{thumbnail}"></span>
+                            <span class="item-title">{title}</span>
+                            </div></div>`;
 
         const el = document.createElement('div');
         el.innerHTML = template;
-
         return el.firstChild;
     }
 }
@@ -35,20 +29,16 @@ class SponsoredRecommendation extends Recommendation {
         super(type, name, url, thumbnails);
     }
 
-    getTemplateElement(id, title, thumbnail, url) {
+    getTemplateElement(id, title, thumbnail, url, branding, origin) {
         const template = `<div class="item-container" data-item-id="{id}">          
-                            <a title="" href="{url}" target="_blank" class="">
-                            <div class=""><span class="item-image" style="{thumbnail}"></span>
-                            <span class="branding">{title}</span>
-                            </div></div>`.
-        replace('{id}', id).
-        replace('{url}', url).
-        replace('{thumbnail}', 'background-image: url(' + thumbnail + ');').
-        replace('{title}', title);
+                            <a class="item-link" href="{url}" target="_blank">
+                            <div class="item-wrapper"><span class="item-image" style="{thumbnail}"></span>
+                            <span class="item-title">{title}</span>
+                            <span class="item-branding">{branding} | {origin}</span>
+                            </div></div>`.replace('{id}', id).replace('{url}', url).replace('{thumbnail}', 'background-image: url(' + thumbnail + ');').replace('{title}', title).replace('{branding}', branding).replace('{origin}', origin);
 
         const el = document.createElement('div');
         el.innerHTML = template;
-
         return el.firstChild;
     }
 }
@@ -58,9 +48,7 @@ class OrganicRecommendation extends Recommendation {
         super(type, name, url, thumbnails);
     }
 
-    getTemplateElement(id, title, thumbnail, url) {
-        return super.getTemplateElement(id, title, thumbnail, url);
+    getTemplateElement(id, title, thumbnail, url, branding, origin) {
+        return super.getTemplateElement(id, title, thumbnail, url, branding, origin);
     }
 }
-
-
